@@ -5,11 +5,12 @@
     "iconFile": "icon.png",
     "author": {
         "name": "Samir Gupta",
-        "homepage": "home",
-        "support": "support"
+        "homepage": "samir.gupta987@gmail.com",
+        "support": "samir_23cs498@dtu.ac.in"
     },
     "name": "RC.Doc.Assistant",
     "nameSlug": "rcdocassistant",
     "classFile": "RcDocAssistantApp.ts",
-    "description": "An AI powered document assistant for RocketChat"
+    "description": "An AI powered document assistant for RocketChat",
+    "implements": []
 }
