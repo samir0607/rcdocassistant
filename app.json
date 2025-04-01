@@ -1,0 +1,15 @@
+{
+    "id": "684e8470-48b0-4271-98bf-f95faf8a0eb1",
+    "version": "0.0.1",
+    "requiredApiVersion": "^1.44.0",
+    "iconFile": "icon.png",
+    "author": {
+        "name": "Samir Gupta",
+        "homepage": "home",
+        "support": "support"
+    },
+    "name": "RC.Doc.Assistant",
+    "nameSlug": "rcdocassistant",
+    "classFile": "RcDocAssistantApp.ts",
+    "description": "An AI powered document assistant for RocketChat"
+}
