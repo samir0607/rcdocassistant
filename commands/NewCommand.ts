@@ -26,19 +26,38 @@ export class NewCommand implements ISlashCommand {
 		const scrapeUrl = `https://api.scraperapi.com/?api_key=${this.API_KEY}&url=${encodeURIComponent(url)}&render=true`;
 
 		try {
+
+			await this.sendMessage(context, modify, "1");
+
 			const response = await http.get(scrapeUrl);
+
+			await this.sendMessage(context, modify, "2");
+
 
 			if (!response || !response.content) {
 				throw new Error('Failed to fetch the webpage.');
 			}
 
-			const textContent = response.content.replace(/<[^>]*>/g, ' ').substring(1000, 2000); 
+			await this.sendMessage(context, modify, "3");
+			
+			const htmlContent = response.content;
+			const textContent = htmlContent
+				.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
+				.replace(/<[^>]*>/g, ' ')
+				.replace(/\s+/g, ' ')
+				//.replace(/[\w\.\-#\[\]_]+(?:\s*,\s*[\w\.\-#\[\]_]+)*\s*\{[^}]*\}/g, ' ')
+				.trim();
 
-			await this.sendMessage(context, modify, `Scraped Content from ${url}:
+			// const fs = require('fs');
 
-${textContent}`);
+			// fs.writeFileSync('output.txt', textContent, 'utf8');
+
+			// console.log('Text written successfully.');
+
+
+			await this.sendMessage(context, modify, `Scraped Text from ${url}: ${textContent.substring(25000, 27000)}...`);
 		} catch (error: any) {
-			await this.sendMessage(context, modify, `Error: ${error.message}`);
+			await this.sendMessage(context, modify, `Error: ${error.text}`);
 		}
 	}
 
