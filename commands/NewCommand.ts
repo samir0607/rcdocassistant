@@ -7,6 +7,7 @@ import {
 	ISlashCommand,
 	SlashCommandContext,
 } from '@rocket.chat/apps-engine/definition/slashcommands';
+//import { scrapeWebPage } from '../scripts/scraper';
 
 export class NewCommand implements ISlashCommand {
 	public command = 'scrape'; 
@@ -28,7 +29,7 @@ export class NewCommand implements ISlashCommand {
 		try {
 
 			await this.sendMessage(context, modify, "1");
-
+			//scrapeWebPage(http, scrapeUrl);
 			const response = await http.get(scrapeUrl);
 
 			await this.sendMessage(context, modify, "2");
@@ -42,11 +43,13 @@ export class NewCommand implements ISlashCommand {
 			
 			const htmlContent = response.content;
 			const textContent = htmlContent
-				.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')
-				.replace(/<[^>]*>/g, ' ')
-				.replace(/\s+/g, ' ')
-				//.replace(/[\w\.\-#\[\]_]+(?:\s*,\s*[\w\.\-#\[\]_]+)*\s*\{[^}]*\}/g, ' ')
-				.trim();
+				.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ') // Remove scripts
+				.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')   // Remove styles
+				.replace(/<\/(p|div|h[1-6]|li|br)>/gi, '\n')       // Replace closing tags with newlines
+				.replace(/<\/?[^>]+(>|$)/g, '')                    // Remove remaining HTML tags
+				.replace(/^\s+|\s+$/gm, '')                        // Trim lines
+				.replace(/\n{2,}/g, '\n\n');                       // Reduce multiple new lines
+
 
 			// const fs = require('fs');
 
@@ -55,7 +58,7 @@ export class NewCommand implements ISlashCommand {
 			// console.log('Text written successfully.');
 
 
-			await this.sendMessage(context, modify, `Scraped Text from ${url}: ${textContent.substring(25000, 27000)}...`);
+			await this.sendMessage(context, modify, `Scraped Text from ${url}: ${textContent.substring(0,1000)}...`);
 		} catch (error: any) {
 			await this.sendMessage(context, modify, `Error: ${error.text}`);
 		}
