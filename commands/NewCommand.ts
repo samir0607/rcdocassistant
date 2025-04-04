@@ -46,8 +46,8 @@ export class NewCommand implements ISlashCommand {
 				.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, ' ') // Remove scripts
 				.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, ' ')   // Remove styles
 				.replace(/<\/(p|div|h[1-6]|li|br)>/gi, '\n')       // Replace closing tags with newlines
-				.replace(/<\/?[^>]+(>|$)/g, '')                    // Remove remaining HTML tags
-				.replace(/^\s+|\s+$/gm, '')                        // Trim lines
+				.replace(/<\/?[^>]+(>|$)/g, ' ')                    // Remove remaining HTML tags
+				.replace(/^\s+|\s+$/gm, ' ')                        // Trim lines
 				.replace(/\n{2,}/g, '\n\n');                       // Reduce multiple new lines
 
 
