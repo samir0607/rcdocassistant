@@ -1,4 +1,6 @@
 import { IHttp } from '@rocket.chat/apps-engine/definition/accessors';
+
+// We will pass the URL from the metadata 
 export async function scrapeWebPage(http: IHttp, url: string) {
 	if (!url) {
 		throw new Error('Please provide a valid URL.');
